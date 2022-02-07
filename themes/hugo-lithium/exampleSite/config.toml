@@ -1,6 +1,6 @@
-baseurl = "/"
+baseurl = "spencergoldberg.netlify.app"
 languageCode = "en-us"
-title = "A Hugo website"
+title = "Date Science Visualizations"
 theme = "hugo-lithium"
 googleAnalytics = ""
 disqusShortname = ""

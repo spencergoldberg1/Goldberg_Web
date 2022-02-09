@@ -9,3 +9,22 @@ tags:
   - GGPLOT2
   - OpenIntro
 ---
+
+## Call Librairies
+```{r}
+library(openintro)
+glimpse(loans_full_schema)
+```
+## Selecting Variables of Interest
+```{r}
+loans <- loans_full_schema %>%
+  select(loan_amount, interest_rate, term, grade, 
+         state, annual_income, homeownership, debt_to_income)
+glimpse(loans)
+```
+## Bar Plot
+```{r}
+ggplot(loans, aes(x= homeownership, fill = grade )) +
+  geom_bar(position = "fill")
+```
+## 

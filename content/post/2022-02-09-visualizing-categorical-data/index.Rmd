@@ -1,17 +1,17 @@
 ---
-title: Visualizing Categorical Data
-author: R package build
+title: "Visualizing Categorical Data"
+author: "R package build"
 date: '2022-02-09'
 slug: visualizing-categorical-data
-categories:
-  - R
+categories: R
 tags:
-  - GGPLOT2
-  - OpenIntro
+- GGPLOT2
+- OpenIntro
 ---
 
 ## Call Librairies
 ```{r}
+library(tidyverse)
 library(openintro)
 glimpse(loans_full_schema)
 ```

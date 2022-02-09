@@ -1,0 +1,11 @@
+---
+title: Visualizing Categorical Data
+author: R package build
+date: '2022-02-09'
+slug: visualizing-categorical-data
+categories:
+  - R
+tags:
+  - GGPLOT2
+  - OpenIntro
+---

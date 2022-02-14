@@ -1,0 +1,210 @@
+---
+title: "Single Data Frame Operations"
+author: "R package build"
+date: '2022-02-14'
+slug: single-data-frame-operations
+categories: ''
+tags: ''
+description: ''
+thumbnail: ''
+---
+
+### Import Librairies
+```{r}
+library(tidyverse)
+```
+
+## Import file from GitHub
+```{r}
+url <- 'https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/hotels.csv'
+hotels <- read_csv(url)
+```
+
+## Select Commands
+```{r}
+hotels %>%
+  select(hotel, lead_time)
+```
+```{r}
+hotels %>%
+  select(-agent)
+```
+```{r}
+hotels %>%
+  select(hotel:arrival_date_month)
+```
+## Selecting variables with certain characteristics
+```{r}
+hotels %>%
+  select(starts_with("arrival"))
+```
+```{r}
+hotels %>%
+  select(ends_with("type"))
+```
+```{r}
+hotels %>%
+  select(adults, children, babies) %>%
+  arrange(babies)
+```
+```{r}
+hotels %>%
+  select(adults, children, babies) %>%
+  arrange(desc(babies))
+```
+## Slicing for certain row numbers
+```{r}
+hotels %>%
+  slice(1:5)
+```
+```{r}
+hotels %>%
+  # slice the first five rows  # this line is a comment
+  #select(hotel) %>%           # this one doesn't run
+  slice(1:5)                   # this line runs
+```
+
+## Filtering
+```{r}
+hotels %>%
+  filter(hotel == "City Hotel")
+```
+
+```{r}
+hotels %>%
+  filter( 
+    adults == 0,
+    children >= 1
+    ) %>% 
+  select(adults, babies, children)
+```
+```{r}
+# bookings with no adults and some children or babies in the room
+hotels %>%
+  filter( 
+    adults == 0,     
+    children >= 1 | babies >= 1     # | means or
+    ) %>%
+  select(adults, babies, children)
+```
+```{r}
+hotels %>% 
+  distinct(market_segment) %>%
+  arrange(market_segment)
+```
+```{r}
+hotels %>% 
+  distinct(hotel, market_segment) %>%
+  arrange(hotel, market_segment)
+```
+
+
+## Count to create Frequency Tables
+```{r}
+# alphabetical order by default
+hotels %>%
+  count(market_segment)
+```
+```{r}
+# descending frequency order
+hotels %>%
+  count(market_segment, sort = TRUE)
+```
+```{r}
+
+# ascending frequency order
+hotels %>%
+  count(market_segment) %>%
+  arrange(n)
+```
+```{r}
+# descending frequency order
+# just like adding sort = TRUE
+hotels %>%
+  count(market_segment) %>%
+  arrange(desc(n))
+```
+### Count for multiple variables
+```{r}
+hotels %>%
+  count(hotel, market_segment)
+```
+```{r}
+# hotel type first
+hotels %>%
+  count(hotel, market_segment)
+```
+```{r}
+# market segment first
+hotels %>%
+  count(market_segment, hotel)
+```
+## Mutate
+```{r}
+hotels %>%
+  mutate(little_ones = children + babies) %>%
+  select(children, babies, little_ones) %>%
+  arrange(desc(little_ones))
+```
+```{r}
+
+# Resort Hotel
+hotels %>%
+  mutate(little_ones = children + babies) %>%
+  filter(
+    little_ones >= 1,
+    hotel == "Resort Hotel"
+    ) %>%
+  select(hotel, little_ones)
+```
+```{r}
+# City Hotel
+hotels %>%
+  mutate(little_ones = children + babies) %>%
+  filter(
+    little_ones >= 1,
+    hotel == "City Hotel"
+    )  %>%
+  select(hotel, little_ones)
+```
+```{r}
+hotels %>%
+  mutate(little_ones = children + babies) %>%
+  count(hotel, little_ones) %>%
+  mutate(prop = n / sum(n))
+```
+## Summarise and group by
+```{r}
+hotels %>%
+  summarise(mean_adr = mean(adr))
+```
+```{r}
+hotels %>%
+  summarise(mean_adr = mean(adr))
+```
+```{r}
+# mean average daily rate for all booking at city and resort hotels
+hotels %>%
+  group_by(hotel) %>%
+  summarise(mean_adr = mean(adr))
+```
+## Calculating Frequencies
+```{r}
+hotels %>%
+  group_by(hotel) %>%
+  summarise(n = n())
+```
+```{r}
+hotels %>%
+  count(hotel)
+```
+```{r}
+hotels %>%
+  summarise(
+    min_adr = min(adr),
+    mean_adr = mean(adr),
+    median_adr = median(adr),
+    max_adr = max(adr)
+    )
+```
+

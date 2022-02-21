@@ -1,9 +1,140 @@
 ---
-title: Data Types
-author: R package build
+title: "Data Types"
+author: "R package build"
 date: '2022-02-21'
 slug: data-types
 categories: []
 tags: []
 ---
+
+## Install Packages 
+```{r}
+library(tidyverse)
+```
+
+## Load Data
+```{r}
+url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/cat-lovers.csv"
+cat_lovers <- read_csv(url)
+view(cat_lovers)
+```
+## View Data
+```{r}
+cat_lovers %>%
+  summarise(mean_cats = mean(number_of_cats))
+
+?mean
+```
+## Why won't is still work?
+```{r}
+cat_lovers %>%
+  summarise(mean_cats = mean(number_of_cats, na.rm = TRUE))
+glimpse(cat_lovers)
+```
+## Fixing errors with numerical data
+```{r}
+cat_lovers %>%
+  mutate(number_of_cats = case_when(
+    name == "Ginger Clark" ~ 2,
+    name == "Doug Bass"    ~ 3,
+    TRUE                   ~ as.numeric(number_of_cats)
+    )) %>%
+  summarise(mean_cats = mean(number_of_cats))
+
+```
+```{r}
+cat_lovers %>%
+  mutate(
+    number_of_cats = case_when(
+      name == "Ginger Clark" ~ "2",
+      name == "Doug Bass"    ~ "3",
+      TRUE                   ~ number_of_cats
+      ),
+    number_of_cats = as.numeric(number_of_cats)
+    ) %>%
+  summarise(mean_cats = mean(number_of_cats))
+```
+## Coercing number of cats to be numeric data
+```{r}
+cat_lovers <- cat_lovers %>%
+  mutate(
+    number_of_cats = case_when(
+      name == "Ginger Clark" ~ "2",
+      name == "Doug Bass"    ~ "3",
+      TRUE                   ~ number_of_cats
+      ),
+    number_of_cats = as.numeric(number_of_cats)
+    )
+glimpse(cat_lovers)
+```
+Data Types- Coercion
+```{r}
+typeof(TRUE)
+typeof("hello")
+typeof(1.335)
+typeof(7L)
+typeof(7)
+typeof(1:3)
+```
+## Concatenation
+```{r}
+c(1, 2, 3)
+c("Hello", "World!")
+c(c("hi", "hello"), c("bye", "jello"))
+```
+
+## Converting between different data types
+```{r}
+x <- 1:3
+x
+```
+```{r}
+y <- as.character(x)
+y
+typeof(y)
+```
+
+```{r}
+x <- c(TRUE, FALSE)
+x
+typeof(x)
+```
+```{r}
+y <- as.numeric(x)
+y
+typeof(y)
+```
+
+## Converting between type without intention
+```{r}
+c(1, "Hello")
+c(FALSE, 3L)
+```
+```{r}
+c(1.2, 3L)
+c(2L, "two")
+```
+## Explicit vs. implicit coercion
+Explicit coercion is when you call a function like as.logical(), as.numeric(), as.integer(), as.double(), or as.character()
+
+Implicit coercion happens when you use a vector in a specific context that expects a certain type of vector
+
+## Special Values
+```{r}
+pi / 0
+0 / 0
+1/0 - 1/0
+1/0 + 1/0
+```
+## NA's are special
+```{r}
+x <- c(1, 2, 3, 4, NA)
+mean(x)
+mean(x, na.rm = TRUE)
+summary(x)
+```
+```{r}
+typeof(NA)
+```
+
 

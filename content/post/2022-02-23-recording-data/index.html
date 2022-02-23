@@ -1,0 +1,230 @@
+---
+title: "Recording Data"
+author: "R package build"
+date: '2022-02-23'
+slug: recording-data
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="case-study-religion-and-income" class="section level1">
+<h1>Case study: Religion and income</h1>
+<div id="read-data" class="section level2">
+<h2>Read Data</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
+## ✓ tidyr   1.2.0     ✓ stringr 1.4.0
+## ✓ readr   2.1.2     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>url &lt;- &quot;https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/relig-income.csv&quot;
+rel_inc &lt;- read_csv(url)</code></pre>
+<pre><code>## Rows: 12 Columns: 6</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): Religious tradition, Less than $30,000, $30,000-$49,999, $50,000-$9...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>view(rel_inc)</code></pre>
+</div>
+<div id="rename-columns" class="section level2">
+<h2>Rename Columns</h2>
+<pre class="r"><code>rel_inc %&gt;%
+  rename( 
+    religion = `Religious tradition`, 
+    n = `Sample Size` 
+  )</code></pre>
+<pre><code>## # A tibble: 12 × 6
+##    religion  `Less than $30…` `$30,000-$49,9…` `$50,000-$99,9…` `$100,000 or m…`
+##    &lt;chr&gt;     &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+##  1 &quot;Buddhis… 36%              18%              32%              13%             
+##  2 &quot;Catholi… 36%              19%              26%              19%             
+##  3 &quot;Evangel… 35%              22%              28%              14%             
+##  4 &quot;Hindu&quot;   17%              13%              34%              36%             
+##  5 &quot;Histori… 53%              22%              17%              8%              
+##  6 &quot;Jehovah… 48%              25%              22%              4%              
+##  7 &quot;Jewish&quot;  16%              15%              24%              44%             
+##  8 &quot;Mainlin… 29%              20%              28%              23%             
+##  9 &quot;Mormon&quot;  27%              20%              33%              20%             
+## 10 &quot;Muslim&quot;  34%              17%              29%              20%             
+## 11 &quot;Orthodo… 18%              17%              36%              29%             
+## 12 &quot;Unaffil… 33%              20%              26%              21%             
+## # … with 1 more variable: n &lt;dbl&gt;</code></pre>
+<pre class="r"><code>rel_inc</code></pre>
+<pre><code>## # A tibble: 12 × 6
+##    `Religious tradition`      `Less than $30…` `$30,000-$49,9…` `$50,000-$99,9…`
+##    &lt;chr&gt;                      &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           
+##  1 &quot;Buddhist&quot;                 36%              18%              32%             
+##  2 &quot;Catholic&quot;                 36%              19%              26%             
+##  3 &quot;Evangelical Protestant&quot;   35%              22%              28%             
+##  4 &quot;Hindu&quot;                    17%              13%              34%             
+##  5 &quot;Historically Black Prote… 53%              22%              17%             
+##  6 &quot;Jehovah&#39;s Witness&quot;        48%              25%              22%             
+##  7 &quot;Jewish&quot;                   16%              15%              24%             
+##  8 &quot;Mainline Protestant&quot;      29%              20%              28%             
+##  9 &quot;Mormon&quot;                   27%              20%              33%             
+## 10 &quot;Muslim&quot;                   34%              17%              29%             
+## 11 &quot;Orthodox Christian&quot;       18%              17%              36%             
+## 12 &quot;Unaffiliated (religious … 33%              20%              26%             
+## # … with 2 more variables: `$100,000 or more` &lt;chr&gt;, `Sample Size` &lt;dbl&gt;</code></pre>
+</div>
+<div id="pivot-longer" class="section level2">
+<h2>Pivot Longer</h2>
+<pre class="r"><code>val &lt;- rel_inc %&gt;%
+  rename(
+    religion = `Religious tradition`,
+    n = `Sample Size`
+  ) %&gt;%
+  pivot_longer( 
+    cols = -c(religion, n),   # all but religion and n 
+    names_to = &quot;income&quot;,  
+    values_to = &quot;proportion&quot; 
+  )</code></pre>
+<pre class="r"><code>try &lt;- as.numeric(gsub(&#39;.{0,1}$&#39;, &#39;&#39;, val$proportion))/100
+try</code></pre>
+<pre><code>##  [1] 0.36 0.18 0.32 0.13 0.36 0.19 0.26 0.19 0.35 0.22 0.28 0.14 0.17 0.13 0.34
+## [16] 0.36 0.53 0.22 0.17 0.08 0.48 0.25 0.22 0.04 0.16 0.15 0.24 0.44 0.29 0.20
+## [31] 0.28 0.23 0.27 0.20 0.33 0.20 0.34 0.17 0.29 0.20 0.18 0.17 0.36 0.29 0.33
+## [46] 0.20 0.26 0.21</code></pre>
+</div>
+<div id="calculate-frequencies" class="section level2">
+<h2>Calculate Frequencies</h2>
+<pre class="r"><code>rel_inc_long &lt;- rel_inc %&gt;% 
+  rename(
+    religion = &quot;Religious tradition&quot;,
+    n = &quot;Sample Size&quot;
+  ) %&gt;%
+  pivot_longer(
+    cols = -c(religion, n), 
+    names_to = &quot;income&quot;, 
+    values_to = &quot;proportion&quot;
+  ) %&gt;%
+  mutate(frequency = round(try*n))
+
+rel_inc_long</code></pre>
+<pre><code>## # A tibble: 48 × 5
+##    religion                   n income            proportion frequency
+##    &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;          &lt;dbl&gt;
+##  1 Buddhist                 233 Less than $30,000 36%               84
+##  2 Buddhist                 233 $30,000-$49,999   18%               42
+##  3 Buddhist                 233 $50,000-$99,999   32%               75
+##  4 Buddhist                 233 $100,000 or more  13%               30
+##  5 Catholic                6137 Less than $30,000 36%             2209
+##  6 Catholic                6137 $30,000-$49,999   19%             1166
+##  7 Catholic                6137 $50,000-$99,999   26%             1596
+##  8 Catholic                6137 $100,000 or more  19%             1166
+##  9 Evangelical Protestant  7462 Less than $30,000 35%             2612
+## 10 Evangelical Protestant  7462 $30,000-$49,999   22%             1642
+## # … with 38 more rows</code></pre>
+</div>
+<div id="barplot" class="section level2">
+<h2>Barplot</h2>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency)) +
+  geom_col()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+## Recode Plot</p>
+<pre class="r"><code>rel_inc_long &lt;- rel_inc_long %&gt;%
+  mutate(religion = case_when(
+    religion == &quot;Evangelical Protestant&quot;           ~ &quot;Ev. Protestant&quot;,
+    religion == &quot;Historically Black Protestant&quot;    ~ &quot;Hist. Black Protestant&quot;,
+    religion == &#39;Unaffiliated (religious &quot;nones&quot;)&#39; ~ &quot;Unaffiliated&quot;,
+    TRUE                                           ~ religion
+  ))
+rel_inc_long</code></pre>
+<pre><code>## # A tibble: 48 × 5
+##    religion           n income            proportion frequency
+##    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;          &lt;dbl&gt;
+##  1 Buddhist         233 Less than $30,000 36%               84
+##  2 Buddhist         233 $30,000-$49,999   18%               42
+##  3 Buddhist         233 $50,000-$99,999   32%               75
+##  4 Buddhist         233 $100,000 or more  13%               30
+##  5 Catholic        6137 Less than $30,000 36%             2209
+##  6 Catholic        6137 $30,000-$49,999   19%             1166
+##  7 Catholic        6137 $50,000-$99,999   26%             1596
+##  8 Catholic        6137 $100,000 or more  19%             1166
+##  9 Ev. Protestant  7462 Less than $30,000 35%             2612
+## 10 Ev. Protestant  7462 $30,000-$49,999   22%             1642
+## # … with 38 more rows</code></pre>
+</div>
+<div id="reverse-religion-order" class="section level2">
+<h2>Reverse Religion Order</h2>
+<pre class="r"><code>rel_inc_long &lt;- rel_inc_long %&gt;%
+  mutate(religion = fct_rev(religion))
+rel_inc_long</code></pre>
+<pre><code>## # A tibble: 48 × 5
+##    religion           n income            proportion frequency
+##    &lt;fct&gt;          &lt;dbl&gt; &lt;chr&gt;             &lt;chr&gt;          &lt;dbl&gt;
+##  1 Buddhist         233 Less than $30,000 36%               84
+##  2 Buddhist         233 $30,000-$49,999   18%               42
+##  3 Buddhist         233 $50,000-$99,999   32%               75
+##  4 Buddhist         233 $100,000 or more  13%               30
+##  5 Catholic        6137 Less than $30,000 36%             2209
+##  6 Catholic        6137 $30,000-$49,999   19%             1166
+##  7 Catholic        6137 $50,000-$99,999   26%             1596
+##  8 Catholic        6137 $100,000 or more  19%             1166
+##  9 Ev. Protestant  7462 Less than $30,000 35%             2612
+## 10 Ev. Protestant  7462 $30,000-$49,999   22%             1642
+## # … with 38 more rows</code></pre>
+</div>
+<div id="add-income" class="section level2">
+<h2>Add Income</h2>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) + 
+  geom_col()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+## Fill Bars</p>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = &quot;fill&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+## Change Colors</p>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = &quot;fill&quot;) +
+  scale_fill_viridis_d()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="change-theme" class="section level2">
+<h2>Change Theme</h2>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = &quot;fill&quot;) +
+  scale_fill_viridis_d() +
+  theme_minimal()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+## Move legend to the bottom</p>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = &quot;fill&quot;) +
+  scale_fill_viridis_d() +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="legend-adjustments" class="section level2">
+<h2>Legend adjustments</h2>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = &quot;fill&quot;) +
+  scale_fill_viridis_d() +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+## Fix Labels</p>
+<pre class="r"><code>ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = &quot;fill&quot;) +
+  scale_fill_viridis_d() +
+  theme_minimal() +
+  theme(legend.position = &quot;bottom&quot;) +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
+  labs(
+    x = &quot;Proportion&quot;, y = &quot;&quot;, 
+    title = &quot;Income distribution by religious group&quot;, 
+    subtitle = &quot;Source: Pew Research Center, Religious Landscape Study&quot;, 
+    fill = &quot;Income&quot; 
+    )</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+</div>
+</div>

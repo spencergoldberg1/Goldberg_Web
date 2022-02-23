@@ -1,0 +1,146 @@
+---
+title: "Recording Data"
+author: "R package build"
+date: '2022-02-23'
+slug: recording-data
+categories: []
+tags: []
+---
+
+# Case study: Religion and income
+
+## Read Data
+```{r}
+library(tidyverse)
+url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/relig-income.csv"
+rel_inc <- read_csv(url)
+view(rel_inc)
+```
+## Rename Columns
+```{r}
+rel_inc %>%
+  rename( 
+    religion = `Religious tradition`, 
+    n = `Sample Size` 
+  )
+rel_inc
+```
+## Pivot Longer
+```{r}
+val <- rel_inc %>%
+  rename(
+    religion = `Religious tradition`,
+    n = `Sample Size`
+  ) %>%
+  pivot_longer( 
+    cols = -c(religion, n),   # all but religion and n 
+    names_to = "income",  
+    values_to = "proportion" 
+  )
+```
+
+
+```{r}
+try <- as.numeric(gsub('.{0,1}$', '', val$proportion))/100
+try
+
+```
+
+## Calculate Frequencies
+```{r}
+
+rel_inc_long <- rel_inc %>% 
+  rename(
+    religion = "Religious tradition",
+    n = "Sample Size"
+  ) %>%
+  pivot_longer(
+    cols = -c(religion, n), 
+    names_to = "income", 
+    values_to = "proportion"
+  ) %>%
+  mutate(frequency = round(try*n))
+
+rel_inc_long
+```
+## Barplot
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency)) +
+  geom_col()
+```
+## Recode Plot
+```{r}
+rel_inc_long <- rel_inc_long %>%
+  mutate(religion = case_when(
+    religion == "Evangelical Protestant"           ~ "Ev. Protestant",
+    religion == "Historically Black Protestant"    ~ "Hist. Black Protestant",
+    religion == 'Unaffiliated (religious "nones")' ~ "Unaffiliated",
+    TRUE                                           ~ religion
+  ))
+rel_inc_long
+```
+## Reverse Religion Order
+```{r}
+rel_inc_long <- rel_inc_long %>%
+  mutate(religion = fct_rev(religion))
+rel_inc_long
+```
+## Add Income
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) + 
+  geom_col()
+```
+## Fill Bars
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = "fill")
+```
+## Change Colors
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = "fill") +
+  scale_fill_viridis_d()
+```
+
+## Change Theme
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = "fill") +
+  scale_fill_viridis_d() +
+  theme_minimal()
+```
+## Move legend to the bottom
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = "fill") +
+  scale_fill_viridis_d() +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+```
+
+## Legend adjustments
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = "fill") +
+  scale_fill_viridis_d() +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE))
+```
+## Fix Labels
+```{r}
+ggplot(rel_inc_long, aes(y = religion, x = frequency, fill = income)) +
+  geom_col(position = "fill") +
+  scale_fill_viridis_d() +
+  theme_minimal() +
+  theme(legend.position = "bottom") +
+  guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
+  labs(
+    x = "Proportion", y = "", 
+    title = "Income distribution by religious group", 
+    subtitle = "Source: Pew Research Center, Religious Landscape Study", 
+    fill = "Income" 
+    )
+```
+
+

@@ -1,0 +1,146 @@
+---
+title: Importing Data
+author: R package build
+date: '2022-02-23'
+slug: importing-data
+categories: []
+tags: []
+---
+
+# Reading rectangular data into R
+
+### Installing Packages
+```{r}
+library(tidyverse)
+```
+
+
+## Reading Data
+```{r}
+url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/nobel.csv"
+nobel <- read_csv(url)
+nobel
+```
+## Writing Data
+```{r}
+df <- tribble(
+  ~x, ~y,
+  1,  "a",
+  2,  "b",
+  3,  "c"
+)
+write_csv(df, file = "df.csv")
+```
+## Reading from created file
+```{r}
+read_csv("df.csv")
+```
+## Variable names
+```{r}
+url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/edibnb-badnames.csv"
+edibnb_badnames <- read_csv(url)
+names(edibnb_badnames)
+view(edibnb_badnames)
+```
+
+## Option 1 - Define column names
+```{r}
+edibnb_col_names <- read_csv(url,
+                             col_names = c("id", "price", 
+                                           "neighbourhood", "accommodates",
+                                           "bathroom", "bedroom", 
+                                           "bed", "review_scores_rating", 
+                                           "n_reviews", "url"))
+names(edibnb_col_names)
+```
+## Option 2 - Format text to snake_case
+```{r}
+edibnb_clean_names <- read_csv(url) %>%
+  janitor::clean_names()
+names(edibnb_clean_names)
+```
+
+## Variable Types
+```{r}
+url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/df-na.csv"
+df_na <- read_csv(url)
+```
+## Option 1. Explicit NAs
+```{r}
+read_csv(url, 
+         na = c("", "NA", ".", "9999", "Not applicable"))
+```
+## Option 2. Specify column types
+```{r}
+read_csv(url, col_types = list(col_double(), 
+                                            col_character(), 
+                                            col_character()))
+```
+
+
+# Case Stude
+## Favorite Foods
+```{r}
+fav_food_url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/favourite-food.csv"
+fav_food <- read_csv(url)
+fav_food
+```
+## Variable Names
+```{r}
+fav_food <- read_csv(fav_food_url) %>%
+  janitor::clean_names()
+fav_food
+```
+## Handling NAs
+```{r}
+fav_food <- read_csv(fav_food_url,
+                       na = c("N/A", "99999")) %>%
+  janitor::clean_names()
+fav_food
+```
+## Make age numeric
+```{r}
+fav_food <- fav_food %>%
+  mutate(
+    age = if_else(age == "five", "5", age),
+    age = as.numeric(age)
+    )
+glimpse(fav_food)
+```
+## Socio-economic status
+```{r}
+fav_food %>%
+  count(ses)
+```
+## Make ses factor
+```{r}
+
+fav_food <- fav_food %>%
+  mutate(ses = fct_relevel(ses, "Low", "Middle", "High"))
+fav_food %>%
+  count(ses)
+```
+## Putting it all together
+```{r}
+fav_food <- read_csv(fav_food_url, na = c("N/A", "99999")) %>%
+  janitor::clean_names() %>%
+  mutate(
+    age = if_else(age == "five", "5", age), 
+    age = as.numeric(age),
+    ses = fct_relevel(ses, "Low", "Middle", "High")
+  )
+fav_food
+```
+## Writing file then reading it back
+```{r}
+write_csv(fav_food, file = "fav-food-clean.csv")
+fav_food_clean <- read_csv("fav-food-clean.csv")
+fav_food_clean
+```
+## What happened to ces again?
+```{r}
+fav_food_clean %>%
+  count(ses)
+```
+
+

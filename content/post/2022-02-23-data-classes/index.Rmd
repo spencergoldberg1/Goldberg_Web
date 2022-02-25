@@ -5,6 +5,11 @@ date: '2022-02-23'
 slug: data-classes
 categories: []
 tags: []
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: kable
 ---
 
 ## Factors 
@@ -65,8 +70,7 @@ df %>%
 ```{r}
 url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/cat-lovers.csv"
 cat_lovers <- read_csv(url)
-glimpse(cat_lovers) %>%
-  knitr::kable()
+glimpse(cat_lovers)
 ```
 ## Plotting cat_lovers
 ```{r}

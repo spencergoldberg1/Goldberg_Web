@@ -65,7 +65,8 @@ df %>%
 ```{r}
 url <- "https://raw.githubusercontent.com/spencergoldberg1/tidyverse/main/cat-lovers.csv"
 cat_lovers <- read_csv(url)
-glimpse(cat_lovers)
+glimpse(cat_lovers) %>%
+  knitr::kable()
 ```
 ## Plotting cat_lovers
 ```{r}

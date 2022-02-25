@@ -104,12 +104,329 @@ cat_lovers &lt;- read_csv(url)</code></pre>
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>glimpse(cat_lovers)</code></pre>
+<pre class="r"><code>glimpse(cat_lovers) %&gt;%
+  knitr::kable()</code></pre>
 <pre><code>## Rows: 60
 ## Columns: 3
 ## $ name           &lt;chr&gt; &quot;Bernice Warren&quot;, &quot;Woodrow Stone&quot;, &quot;Willie Bass&quot;, &quot;Tyro…
 ## $ number_of_cats &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;3&quot;, &quot;3&quot;, &quot;2&quot;, &quot;1&quot;, &quot;1&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, …
 ## $ handedness     &lt;chr&gt; &quot;left&quot;, &quot;left&quot;, &quot;left&quot;, &quot;left&quot;, &quot;left&quot;, &quot;left&quot;, &quot;left&quot;,…</code></pre>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="61%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">name</th>
+<th align="left">number_of_cats</th>
+<th align="left">handedness</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Bernice Warren</td>
+<td align="left">0</td>
+<td align="left">left</td>
+</tr>
+<tr class="even">
+<td align="left">Woodrow Stone</td>
+<td align="left">0</td>
+<td align="left">left</td>
+</tr>
+<tr class="odd">
+<td align="left">Willie Bass</td>
+<td align="left">1</td>
+<td align="left">left</td>
+</tr>
+<tr class="even">
+<td align="left">Tyrone Estrada</td>
+<td align="left">3</td>
+<td align="left">left</td>
+</tr>
+<tr class="odd">
+<td align="left">Alex Daniels</td>
+<td align="left">3</td>
+<td align="left">left</td>
+</tr>
+<tr class="even">
+<td align="left">Jane Bates</td>
+<td align="left">2</td>
+<td align="left">left</td>
+</tr>
+<tr class="odd">
+<td align="left">Latoya Simpson</td>
+<td align="left">1</td>
+<td align="left">left</td>
+</tr>
+<tr class="even">
+<td align="left">Darin Woods</td>
+<td align="left">1</td>
+<td align="left">left</td>
+</tr>
+<tr class="odd">
+<td align="left">Agnes Cobb</td>
+<td align="left">0</td>
+<td align="left">left</td>
+</tr>
+<tr class="even">
+<td align="left">Tabitha Grant</td>
+<td align="left">0</td>
+<td align="left">left</td>
+</tr>
+<tr class="odd">
+<td align="left">Perry Cross</td>
+<td align="left">0</td>
+<td align="left">left</td>
+</tr>
+<tr class="even">
+<td align="left">Wanda Silva</td>
+<td align="left">0</td>
+<td align="left">left</td>
+</tr>
+<tr class="odd">
+<td align="left">Alicia Sims</td>
+<td align="left">1</td>
+<td align="left">left</td>
+</tr>
+<tr class="even">
+<td align="left">Emily Logan</td>
+<td align="left">3</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Woodrow Elliott</td>
+<td align="left">3</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Brent Copeland</td>
+<td align="left">2</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Pedro Carlson</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Patsy Luna</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Brett Robbins</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Oliver George</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Calvin Perry</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Lora Gutierrez</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Charlotte Sparks</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Earl Mack</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Leslie Wade</td>
+<td align="left">4</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Santiago Barker</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Jose Bell</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Lynda Smith</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Bradford Marshall</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Irving Miller</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Caroline Simpson</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Frances Welch</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Melba Jenkins</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Veronica Morales</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Juanita Cunningham</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Maurice Howard</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Teri Pierce</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Phil Franklin</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Jan Zimmerman</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Leslie Price</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Bessie Patterson</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Ethel Wolfe</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Naomi Wright</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Sadie Frank</td>
+<td align="left">3</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Lonnie Cannon</td>
+<td align="left">3</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Tony Garcia</td>
+<td align="left">2</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Darla Newton</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Ginger Clark</td>
+<td align="left">1.5 - honestly I think one of my cats is half human</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Lionel Campbell</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Florence Klein</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Harriet Leonard</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Terrence Harrington</td>
+<td align="left">0</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Travis Garner</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Doug Bass</td>
+<td align="left">three</td>
+<td align="left">right</td>
+</tr>
+<tr class="odd">
+<td align="left">Pat Norris</td>
+<td align="left">1</td>
+<td align="left">right</td>
+</tr>
+<tr class="even">
+<td align="left">Dawn Young</td>
+<td align="left">1</td>
+<td align="left">ambidextrous</td>
+</tr>
+<tr class="odd">
+<td align="left">Shari Alvarez</td>
+<td align="left">1</td>
+<td align="left">ambidextrous</td>
+</tr>
+<tr class="even">
+<td align="left">Tamara Robinson</td>
+<td align="left">0</td>
+<td align="left">ambidextrous</td>
+</tr>
+<tr class="odd">
+<td align="left">Megan Morgan</td>
+<td align="left">0</td>
+<td align="left">ambidextrous</td>
+</tr>
+<tr class="even">
+<td align="left">Kara Obrien</td>
+<td align="left">2</td>
+<td align="left">ambidextrous</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="plotting-cat_lovers" class="section level2">
 <h2>Plotting cat_lovers</h2>

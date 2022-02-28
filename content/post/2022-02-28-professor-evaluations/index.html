@@ -1,0 +1,534 @@
+---
+title: "Professor Evaluations"
+author: "R package build"
+date: '2022-02-28'
+slug: professor-evaluations
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="preliminaries" class="section level1">
+<h1>Preliminaries</h1>
+<div id="importing-librairies" class="section level2">
+<h2>Importing Librairies</h2>
+<pre class="r"><code>library(moderndive)
+library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+## ✓ tibble  3.1.6     ✓ dplyr   1.0.8
+## ✓ tidyr   1.2.0     ✓ stringr 1.4.0
+## ✓ readr   2.1.2     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(skimr)
+library(gapminder)</code></pre>
+</div>
+<div id="importing-data" class="section level2">
+<h2>Importing Data</h2>
+<pre class="r"><code>evals_ch5 &lt;- evals %&gt;%
+  select(ID, score, bty_avg, age)</code></pre>
+</div>
+<div id="explore-the-data" class="section level2">
+<h2>Explore the data</h2>
+<pre class="r"><code>glimpse(evals_ch5)</code></pre>
+<pre><code>## Rows: 463
+## Columns: 4
+## $ ID      &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,…
+## $ score   &lt;dbl&gt; 4.7, 4.1, 3.9, 4.8, 4.6, 4.3, 2.8, 4.1, 3.4, 4.5, 3.8, 4.5, 4.…
+## $ bty_avg &lt;dbl&gt; 5.000, 5.000, 5.000, 5.000, 3.000, 3.000, 3.000, 3.333, 3.333,…
+## $ age     &lt;int&gt; 36, 36, 36, 36, 59, 59, 59, 51, 51, 40, 40, 40, 40, 40, 40, 40…</code></pre>
+</div>
+<div id="getting-samples-from-the-data" class="section level2">
+<h2>Getting Samples from the data</h2>
+<pre class="r"><code>evals_ch5 %&gt;%
+  sample_n(size = 5)</code></pre>
+<pre><code>## # A tibble: 5 × 4
+##      ID score bty_avg   age
+##   &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
+## 1   297   4.1    6.17    42
+## 2   337   2.5    1.67    60
+## 3   408   4.2    2.83    57
+## 4   343   4.6    3.5     43
+## 5   411   4.6    6.67    47</code></pre>
+</div>
+<div id="mean-and-median-of-bty-and-score" class="section level2">
+<h2>Mean and Median of BTY and Score</h2>
+<pre class="r"><code>evals_ch5 %&gt;%
+  summarize(mean_bty_avg = mean(bty_avg), mean_score = mean(score),
+            median_bty_avg = median(bty_avg), median_score = median(score))</code></pre>
+<pre><code>## # A tibble: 1 × 4
+##   mean_bty_avg mean_score median_bty_avg median_score
+##          &lt;dbl&gt;      &lt;dbl&gt;          &lt;dbl&gt;        &lt;dbl&gt;
+## 1         4.42       4.17           4.33          4.3</code></pre>
+</div>
+<div id="five-number-summary" class="section level2">
+<h2>Five Number Summary</h2>
+<pre class="r"><code>evals_ch5 %&gt;% select(score, bty_avg) %&gt;% skim()</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-6">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">463</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="12%" />
+<col width="17%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="5%" />
+<col width="6%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">score</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4.17</td>
+<td align="right">0.54</td>
+<td align="right">2.30</td>
+<td align="right">3.80</td>
+<td align="right">4.30</td>
+<td align="right">4.6</td>
+<td align="right">5.00</td>
+<td align="left">▁▁▅▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">bty_avg</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4.42</td>
+<td align="right">1.53</td>
+<td align="right">1.67</td>
+<td align="right">3.17</td>
+<td align="right">4.33</td>
+<td align="right">5.5</td>
+<td align="right">8.17</td>
+<td align="left">▃▇▇▃▂</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="scatter-plot-of-score-vs.-bty_avg" class="section level2">
+<h2>Scatter Plot of Score Vs. Bty_avg</h2>
+<pre class="r"><code>plot(evals_ch5$score, evals_ch5$bty_avg)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+## Get the correlation between Score and Bty_avg</p>
+<pre class="r"><code>evals_ch5 %&gt;% 
+  get_correlation(formula = score ~ bty_avg)</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##     cor
+##   &lt;dbl&gt;
+## 1 0.187</code></pre>
+<pre class="r"><code>evals_ch5 %&gt;% 
+  summarize(correlation = cor(score, bty_avg))</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   correlation
+##         &lt;dbl&gt;
+## 1       0.187</code></pre>
+</div>
+<div id="data-visualization" class="section level2">
+<h2>Data Visualization</h2>
+<pre class="r"><code>ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
+  geom_point() +
+  labs(x = &quot;Beauty Score&quot;, 
+       y = &quot;Teaching Score&quot;,
+       title = &quot;Scatterplot of relationship of teaching and beauty scores&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+## Adding the line of best fit</p>
+<pre class="r"><code>ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
+  geom_point() +
+  labs(x = &quot;Beauty Score&quot;, y = &quot;Teaching Score&quot;,
+       title = &quot;Relationship between teaching and beauty scores&quot;) +  
+  geom_smooth(method = &quot;lm&quot;, se = FALSE)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+## Looking at Linear Regression Table</p>
+<pre class="r"><code># Fit regression model:
+score_model &lt;- lm(score ~ bty_avg, data = evals_ch5)
+# Get regression table:
+get_regression_table(score_model)</code></pre>
+<pre><code>## # A tibble: 2 × 7
+##   term      estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept    3.88      0.076     51.0        0    3.73     4.03 
+## 2 bty_avg      0.067     0.016      4.09       0    0.035    0.099</code></pre>
+</div>
+<div id="using-the-get_regression_points-function" class="section level2">
+<h2>Using the get_regression_points() function</h2>
+<pre class="r"><code>regression_points &lt;- get_regression_points(score_model)
+regression_points</code></pre>
+<pre><code>## # A tibble: 463 × 5
+##       ID score bty_avg score_hat residual
+##    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1     1   4.7    5         4.21    0.486
+##  2     2   4.1    5         4.21   -0.114
+##  3     3   3.9    5         4.21   -0.314
+##  4     4   4.8    5         4.21    0.586
+##  5     5   4.6    3         4.08    0.52 
+##  6     6   4.3    3         4.08    0.22 
+##  7     7   2.8    3         4.08   -1.28 
+##  8     8   4.1    3.33      4.10   -0.002
+##  9     9   3.4    3.33      4.10   -0.702
+## 10    10   4.5    3.17      4.09    0.409
+## # … with 453 more rows</code></pre>
+</div>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory data analysis</h2>
+<pre class="r"><code>library(gapminder)
+gapminder2007 &lt;- gapminder %&gt;%
+  filter(year == 2007) %&gt;%
+  select(country, lifeExp, continent, gdpPercap)
+glimpse(gapminder2007)</code></pre>
+<pre><code>## Rows: 142
+## Columns: 4
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Albania&quot;, &quot;Algeria&quot;, &quot;Angola&quot;, &quot;Argentina&quot;, …
+## $ lifeExp   &lt;dbl&gt; 43.828, 76.423, 72.301, 42.731, 75.320, 81.235, 79.829, 75.6…
+## $ continent &lt;fct&gt; Asia, Europe, Africa, Africa, Americas, Oceania, Europe, Asi…
+## $ gdpPercap &lt;dbl&gt; 974.5803, 5937.0295, 6223.3675, 4797.2313, 12779.3796, 34435…</code></pre>
+</div>
+<div id="selecting-samples-from-gapminder" class="section level2">
+<h2>Selecting samples from gapminder</h2>
+<pre class="r"><code>gapminder2007 %&gt;% sample_n(size = 5)</code></pre>
+<pre><code>## # A tibble: 5 × 4
+##   country             lifeExp continent gdpPercap
+##   &lt;fct&gt;                 &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
+## 1 New Zealand            80.2 Oceania      25185.
+## 2 Taiwan                 78.4 Asia         28718.
+## 3 Czech Republic         76.5 Europe       22833.
+## 4 Trinidad and Tobago    69.8 Americas     18009.
+## 5 Afghanistan            43.8 Asia           975.</code></pre>
+</div>
+<div id="using-the-skim-function-to-explore-gapminder" class="section level2">
+<h2>Using the skim function to explore gapminder</h2>
+<pre class="r"><code>gapminder2007 %&gt;%
+  select(lifeExp, continent) %&gt;%
+  skim()</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-15">Table 2: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">142</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="15%" />
+<col width="8%" />
+<col width="10%" />
+<col width="38%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">continent</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">FALSE</td>
+<td align="right">5</td>
+<td align="left">Afr: 52, Asi: 33, Eur: 30, Ame: 25</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="16%" />
+<col width="11%" />
+<col width="16%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="5%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">lifeExp</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">67.01</td>
+<td align="right">12.07</td>
+<td align="right">39.61</td>
+<td align="right">57.16</td>
+<td align="right">71.94</td>
+<td align="right">76.41</td>
+<td align="right">82.6</td>
+<td align="left">▂▃▃▆▇</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="plotting-the-data" class="section level2">
+<h2>Plotting the data</h2>
+<pre class="r"><code>ggplot(gapminder2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5, color = &quot;white&quot;) +
+  labs(x = &quot;Life expectancy&quot;, y = &quot;Number of countries&quot;,
+       title = &quot;Histogram of distribution of worldwide life expectancies&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(gapminder2007, aes(x = lifeExp)) +
+  geom_histogram(binwidth = 5, color = &quot;white&quot;) +
+  labs(x = &quot;Life expectancy&quot;, 
+       y = &quot;Number of countries&quot;,
+       title = &quot;Histogram of distribution of worldwide life expectancies&quot;) +
+  facet_wrap(~ continent, nrow = 2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+## Box plot of the data</p>
+<pre class="r"><code>ggplot(gapminder2007, aes(x = continent, y = lifeExp)) +
+  geom_boxplot() +
+  labs(x = &quot;Continent&quot;, y = &quot;Life expectancy&quot;,
+       title = &quot;Life expectancy by continent&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+<div id="computing-the-mean-and-median-of-the-lifeexp" class="section level2">
+<h2>Computing the mean and median of the lifeExp</h2>
+<pre class="r"><code>lifeExp_by_continent &lt;- gapminder2007 %&gt;%
+  group_by(continent) %&gt;%
+  summarize(median = median(lifeExp), 
+            mean = mean(lifeExp))
+
+glimpse(lifeExp_by_continent)</code></pre>
+<pre><code>## Rows: 5
+## Columns: 3
+## $ continent &lt;fct&gt; Africa, Americas, Asia, Europe, Oceania
+## $ median    &lt;dbl&gt; 52.9265, 72.8990, 72.3960, 78.6085, 80.7195
+## $ mean      &lt;dbl&gt; 54.80604, 73.60812, 70.72848, 77.64860, 80.71950</code></pre>
+</div>
+<div id="linear-regression" class="section level2">
+<h2>Linear regression</h2>
+<pre class="r"><code>lifeExp_model &lt;- lm(lifeExp ~ continent, data = gapminder2007)
+get_regression_table(lifeExp_model)</code></pre>
+<pre><code>## # A tibble: 5 × 7
+##   term                estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;                  &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept               54.8      1.02     53.4        0     52.8     56.8
+## 2 continent: Americas     18.8      1.8      10.4        0     15.2     22.4
+## 3 continent: Asia         15.9      1.65      9.68       0     12.7     19.2
+## 4 continent: Europe       22.8      1.70     13.5        0     19.5     26.2
+## 5 continent: Oceania      25.9      5.33      4.86       0     15.4     36.4</code></pre>
+<pre class="r"><code>regression_points &lt;- get_regression_points(lifeExp_model, ID = &quot;country&quot;)
+regression_points</code></pre>
+<pre><code>## # A tibble: 142 × 5
+##    country     lifeExp continent lifeExp_hat residual
+##    &lt;fct&gt;         &lt;dbl&gt; &lt;fct&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+##  1 Afghanistan    43.8 Asia             70.7  -26.9  
+##  2 Albania        76.4 Europe           77.6   -1.23 
+##  3 Algeria        72.3 Africa           54.8   17.5  
+##  4 Angola         42.7 Africa           54.8  -12.1  
+##  5 Argentina      75.3 Americas         73.6    1.71 
+##  6 Australia      81.2 Oceania          80.7    0.516
+##  7 Austria        79.8 Europe           77.6    2.18 
+##  8 Bahrain        75.6 Asia             70.7    4.91 
+##  9 Bangladesh     64.1 Asia             70.7   -6.67 
+## 10 Belgium        79.4 Europe           77.6    1.79 
+## # … with 132 more rows</code></pre>
+</div>
+<div id="fitting-the-regression-model" class="section level2">
+<h2>Fitting the regression model</h2>
+<pre class="r"><code># Fit regression model:
+score_model &lt;- lm(score ~ bty_avg, 
+                  data = evals_ch5)
+
+# Get regression points:
+regression_points &lt;- get_regression_points(score_model)
+regression_points</code></pre>
+<pre><code>## # A tibble: 463 × 5
+##       ID score bty_avg score_hat residual
+##    &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1     1   4.7    5         4.21    0.486
+##  2     2   4.1    5         4.21   -0.114
+##  3     3   3.9    5         4.21   -0.314
+##  4     4   4.8    5         4.21    0.586
+##  5     5   4.6    3         4.08    0.52 
+##  6     6   4.3    3         4.08    0.22 
+##  7     7   2.8    3         4.08   -1.28 
+##  8     8   4.1    3.33      4.10   -0.002
+##  9     9   3.4    3.33      4.10   -0.702
+## 10    10   4.5    3.17      4.09    0.409
+## # … with 453 more rows</code></pre>
+</div>
+<div id="computing-the-sum-of-squared-residuals" class="section level2">
+<h2>Computing the sum of squared residuals</h2>
+<pre class="r"><code># Compute sum of squared residuals
+regression_points %&gt;%
+  mutate(squared_residuals = residual^2) %&gt;%
+  summarize(sum_of_squared_residuals = sum(squared_residuals))</code></pre>
+<pre><code>## # A tibble: 1 × 1
+##   sum_of_squared_residuals
+##                      &lt;dbl&gt;
+## 1                     132.</code></pre>
+</div>
+<div id="regression-table-of-data" class="section level2">
+<h2>Regression table of data</h2>
+<pre class="r"><code># Fit regression model:
+score_model &lt;- lm(formula = score ~ bty_avg, data = evals_ch5)
+# Get regression table:
+get_regression_table(score_model)</code></pre>
+<pre><code>## # A tibble: 2 × 7
+##   term      estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 intercept    3.88      0.076     51.0        0    3.73     4.03 
+## 2 bty_avg      0.067     0.016      4.09       0    0.035    0.099</code></pre>
+</div>
+<div id="cleaning-the-data-using-tidy-fromn-the-broom-package" class="section level2">
+<h2>Cleaning the data using tidy() fromn the broom package</h2>
+<pre class="r"><code>library(broom)
+library(janitor)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>score_model %&gt;%
+  tidy(conf.int = TRUE) %&gt;%
+  mutate_if(is.numeric, round, digits = 3) %&gt;%
+  clean_names() %&gt;%
+  rename(lower_ci = conf_low, upper_ci = conf_high)</code></pre>
+<pre><code>## # A tibble: 2 × 7
+##   term        estimate std_error statistic p_value lower_ci upper_ci
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    3.88      0.076     51.0        0    3.73     4.03 
+## 2 bty_avg        0.067     0.016      4.09       0    0.035    0.099</code></pre>
+<pre class="r"><code>library(broom)
+library(janitor)
+score_model %&gt;%
+  augment() %&gt;%
+  mutate_if(is.numeric, round, digits = 3) %&gt;%
+  clean_names() %&gt;%
+  select(-c(&quot;std_resid&quot;, &quot;hat&quot;, &quot;sigma&quot;, &quot;cooksd&quot;, &quot;std_resid&quot;))</code></pre>
+<pre><code>## # A tibble: 463 × 4
+##    score bty_avg fitted  resid
+##    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+##  1   4.7    5      4.21  0.486
+##  2   4.1    5      4.21 -0.114
+##  3   3.9    5      4.21 -0.314
+##  4   4.8    5      4.21  0.586
+##  5   4.6    3      4.08  0.52 
+##  6   4.3    3      4.08  0.22 
+##  7   2.8    3      4.08 -1.28 
+##  8   4.1    3.33   4.10 -0.002
+##  9   3.4    3.33   4.10 -0.702
+## 10   4.5    3.17   4.09  0.409
+## # … with 453 more rows</code></pre>
+</div>
+</div>

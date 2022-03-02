@@ -49,11 +49,11 @@ library(gapminder)</code></pre>
 <pre><code>## # A tibble: 5 × 4
 ##      ID score bty_avg   age
 ##   &lt;int&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
-## 1   297   4.1    6.17    42
-## 2   337   2.5    1.67    60
-## 3   408   4.2    2.83    57
-## 4   343   4.6    3.5     43
-## 5   411   4.6    6.67    47</code></pre>
+## 1   346   4.4    3.5     43
+## 2   406   5      2.83    57
+## 3   451   4.4    4.33    60
+## 4   147   4.4    4.83    52
+## 5    80   3.3    5.5     37</code></pre>
 </div>
 <div id="mean-and-median-of-bty-and-score" class="section level2">
 <h2>Mean and Median of BTY and Score</h2>
@@ -183,22 +183,30 @@ library(gapminder)</code></pre>
 ##         &lt;dbl&gt;
 ## 1       0.187</code></pre>
 </div>
-<div id="data-visualization" class="section level2">
-<h2>Data Visualization</h2>
+<div id="scatter-plot-score-vs.-bty_score" class="section level2">
+<h2>Scatter Plot: Score Vs. BTY_Score</h2>
 <pre class="r"><code>ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
   geom_point() +
   labs(x = &quot;Beauty Score&quot;, 
        y = &quot;Teaching Score&quot;,
        title = &quot;Scatterplot of relationship of teaching and beauty scores&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
-## Adding the line of best fit</p>
+## Plot with jitter</p>
+<pre class="r"><code>ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
+  geom_jitter() +
+  labs(x = &quot;Beauty Score&quot;, y = &quot;Teaching Score&quot;,
+       title = &quot;Scatterplot of relationship of teaching and beauty scores&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="linear-regression-line-on-the-scatter-plot" class="section level2">
+<h2>Linear Regression Line on the Scatter Plot</h2>
 <pre class="r"><code>ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
   geom_point() +
   labs(x = &quot;Beauty Score&quot;, y = &quot;Teaching Score&quot;,
        title = &quot;Relationship between teaching and beauty scores&quot;) +  
   geom_smooth(method = &quot;lm&quot;, se = FALSE)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 ## Looking at Linear Regression Table</p>
 <pre class="r"><code># Fit regression model:
 score_model &lt;- lm(score ~ bty_avg, data = evals_ch5)
@@ -247,13 +255,13 @@ glimpse(gapminder2007)</code></pre>
 <h2>Selecting samples from gapminder</h2>
 <pre class="r"><code>gapminder2007 %&gt;% sample_n(size = 5)</code></pre>
 <pre><code>## # A tibble: 5 × 4
-##   country             lifeExp continent gdpPercap
-##   &lt;fct&gt;                 &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
-## 1 New Zealand            80.2 Oceania      25185.
-## 2 Taiwan                 78.4 Asia         28718.
-## 3 Czech Republic         76.5 Europe       22833.
-## 4 Trinidad and Tobago    69.8 Americas     18009.
-## 5 Afghanistan            43.8 Asia           975.</code></pre>
+##   country     lifeExp continent gdpPercap
+##   &lt;fct&gt;         &lt;dbl&gt; &lt;fct&gt;         &lt;dbl&gt;
+## 1 Senegal        63.1 Africa        1712.
+## 2 Mali           54.5 Africa        1043.
+## 3 Angola         42.7 Africa        4797.
+## 4 Switzerland    81.7 Europe       37506.
+## 5 Vietnam        74.2 Asia          2442.</code></pre>
 </div>
 <div id="using-the-skim-function-to-explore-gapminder" class="section level2">
 <h2>Using the skim function to explore gapminder</h2>
@@ -261,7 +269,7 @@ glimpse(gapminder2007)</code></pre>
   select(lifeExp, continent) %&gt;%
   skim()</code></pre>
 <table>
-<caption><span id="tab:unnamed-chunk-15">Table 2: </span>Data summary</caption>
+<caption><span id="tab:unnamed-chunk-16">Table 2: </span>Data summary</caption>
 <tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -385,20 +393,20 @@ glimpse(gapminder2007)</code></pre>
   geom_histogram(binwidth = 5, color = &quot;white&quot;) +
   labs(x = &quot;Life expectancy&quot;, y = &quot;Number of countries&quot;,
        title = &quot;Histogram of distribution of worldwide life expectancies&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(gapminder2007, aes(x = lifeExp)) +
   geom_histogram(binwidth = 5, color = &quot;white&quot;) +
   labs(x = &quot;Life expectancy&quot;, 
        y = &quot;Number of countries&quot;,
        title = &quot;Histogram of distribution of worldwide life expectancies&quot;) +
   facet_wrap(~ continent, nrow = 2)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 ## Box plot of the data</p>
 <pre class="r"><code>ggplot(gapminder2007, aes(x = continent, y = lifeExp)) +
   geom_boxplot() +
   labs(x = &quot;Continent&quot;, y = &quot;Life expectancy&quot;,
        title = &quot;Life expectancy by continent&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 </div>
 <div id="computing-the-mean-and-median-of-the-lifeexp" class="section level2">
 <h2>Computing the mean and median of the lifeExp</h2>

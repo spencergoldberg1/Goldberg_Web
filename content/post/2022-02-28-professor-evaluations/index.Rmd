@@ -56,7 +56,7 @@ evals_ch5 %>%
 evals_ch5 %>% 
   summarize(correlation = cor(score, bty_avg))
 ```
-## Data Visualization
+## Scatter Plot: Score Vs. BTY_Score
 ```{r}
 ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
   geom_point() +
@@ -64,7 +64,17 @@ ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
        y = "Teaching Score",
        title = "Scatterplot of relationship of teaching and beauty scores")
 ```
-## Adding the line of best fit
+## Plot with jitter
+```{r}
+ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
+  geom_jitter() +
+  labs(x = "Beauty Score", y = "Teaching Score",
+       title = "Scatterplot of relationship of teaching and beauty scores")
+```
+
+
+
+## Linear Regression Line on the Scatter Plot
 ```{r}
 ggplot(evals_ch5, aes(x = bty_avg, y = score)) +
   geom_point() +

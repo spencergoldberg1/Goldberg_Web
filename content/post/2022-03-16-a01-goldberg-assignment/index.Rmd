@@ -7,7 +7,7 @@ categories: []
 tags: []
 ---
 
-**What are the advantages and disadvantages of Single Split Validation set approach versus LOOCV?**
+# What are the advantages and disadvantages of Single Split Validation set approach versus LOOCV?
 
 # Advantages of Single Split Validation set approach
 

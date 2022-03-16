@@ -1,6 +1,6 @@
 ---
-title: A01_Goldberg Assignment
-author: R package build
+title: "A01_Goldberg Assignment"
+author: "R package build"
 date: '2022-03-16'
 slug: a01-goldberg-assignment
 categories: []
@@ -10,4 +10,35 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<p><strong>What are the advantages and disadvantages of Single Split Validation set approach versus LOOCV?</strong></p>
+<div id="advantages-of-single-split-validation-set-approach" class="section level1">
+<h1>Advantages of Single Split Validation set approach</h1>
+<div id="part-of-the-data-has-been-strictly-used-for-ttraining-while-you-can-validate-your-model-on-new-data-that-the-model-hasnt-seen-yet." class="section level2">
+<h2>1. Part of the data has been strictly used for ttraining while you can validate your model on new data that the model hasn’t seen yet.</h2>
+</div>
+<div id="model-will-be-able-to-predict-on-data-it-hasnt-seen-yet-because-it-uses-the-validation-data-set-to-evaluate-itself-on-the-fitted-model." class="section level2">
+<h2>2. Model will be able to predict on data it hasn’t seen yet because it uses the validation data set to evaluate itself on the fitted model.</h2>
+</div>
+</div>
+<div id="disadvantages-of-single-split-validation-set-approach" class="section level1">
+<h1>Disadvantages of Single Split Validation set approach</h1>
+<ol style="list-style-type: decimal">
+<li>The split in the data could have high variance and overestimate the error because it is uncertain on the distribution in the data that is part of the training subset which is used to actually fit the model.</li>
+</ol>
+</div>
+<div id="advantages-of-loocv" class="section level1">
+<h1>Advantages of LOOCV</h1>
+<div id="the-data-is-retrained-and-evaluated-on-a-random-sample-that-is-just-1-less-than-the-total-number-of-observations-which-helps-better-fit-the-model-because-of-how-the-model-is-retrained-on-more-data-that-it-hasnt-seen-which-gives-a-better-representation-of-the-error-for-the-whole-dataset." class="section level2">
+<h2>1. The data is retrained and evaluated on a random sample that is just 1 less than the total number of observations which helps better fit the model because of how the model is retrained on more data that it hasn’t seen which gives a better representation of the error for the whole dataset.</h2>
+</div>
+</div>
+<div id="disdvantages-of-loocv" class="section level1">
+<h1>Disdvantages of LOOCV</h1>
+<div id="the-computation-is-expensive-because-you-have-to-train-the-model-n-number-of-times-and-it-can-take-a-long-time-to-fit-the-model." class="section level2">
+<h2>1. The computation is expensive because you have to train the model n number of times and it can take a long time to fit the model.</h2>
+</div>
+<div id="there-might-also-be-high-variance-since-the-testing-data-that-is-used-is-only-on-a-single-observation-and-doesnt-give-a-true-evaluation-of-the-whole-dataset." class="section level2">
+<h2>2. There might also be high variance since the testing data that is used is only on a single observation and doesn’t give a true evaluation of the whole dataset.</h2>
 <script src="https://gist.github.com/spencergoldberg1/6409a211ad7ea189c582298dcf831d95.js"></script>
+</div>
+</div>

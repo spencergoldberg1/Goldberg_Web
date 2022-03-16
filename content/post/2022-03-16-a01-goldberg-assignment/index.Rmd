@@ -6,8 +6,9 @@ slug: a01-goldberg-assignment
 categories: []
 tags: []
 ---
-
+\begin{center}
 # What are the advantages and disadvantages of Single Split Validation set approach versus LOOCV?
+\end{center}
 
 # Advantages of Single Split Validation set approach
 

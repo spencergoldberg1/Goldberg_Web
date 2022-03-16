@@ -9,26 +9,25 @@ tags: []
 
 # What are the advantages and disadvantages of Single Split Validation set approach versus LOOCV?
 
-
 ## Advantages of Single Split Validation set approach
-
 ### 1. Part of the data has been strictly used for ttraining while you can validate your model on new data that the model hasn't seen yet.
 ### 2. Model will be able to predict on data it hasn't seen yet because it uses the validation data set to evaluate itself on the fitted model.
 
 ## Disadvantages of Single Split Validation set approach
-
 ### 1. The split in the data could have high variance and overestimate the error because it is uncertain on the distribution in the data that is part of the training subset which is used to actually fit the model.
 
 ## Advantages of LOOCV
-
 ### 1. The data is retrained and evaluated on a random sample that is just 1 less than the total number of observations which helps better fit the model because of how the model is retrained on more data that it hasn't seen which gives a better representation of the error for the whole dataset. 
 
 ## Disdvantages of LOOCV
-
 ### 1. The computation is expensive because you have to train the model n number of times and it can take a long time to fit the model.
 ### 2. There might also be high variance since the testing data that is used is only on a single observation and doesn't give a true evaluation of the whole dataset. 
 
+## The Pros of Bootstrapping 
+### 1. You can have an unlimited number of trials for testing with the same data set so that the samples have the least amount of variance, therefore the curve for the number of samples will closely resemble a normal distribution for the more samples you have.
 
+## The cons of Bootstrapping 
+### 1. The modeling will only tell you information about the current sample and won't be able to tell you anything about unseen data or a different population because the model is only refit against the same data. 
 
 
 <script src="https://gist.github.com/spencergoldberg1/6409a211ad7ea189c582298dcf831d95.js"></script>

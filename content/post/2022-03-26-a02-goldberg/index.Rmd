@@ -1,0 +1,12 @@
+---
+title: A02_Goldberg
+author: R package build
+date: '2022-03-26'
+slug: a02-goldberg
+categories: []
+tags: []
+---
+
+# A02_Goldberg
+<script src="https://gist.github.com/spencergoldberg1/cb87ccd698068c0ded23b17308c10d5e.js"></script>
+

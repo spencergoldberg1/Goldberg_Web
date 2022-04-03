@@ -8,5 +8,5 @@ tags: []
 ---
 
 A03_Goldberg
-<script src="https://gist.github.com/spencergoldberg1/23b6004f997a6ce457f476c4fcd9f495.js"></script>
+<script src="https://gist.github.com/spencergoldberg1/31f3168d2ac7dd154552778b64eb5aef.js"></script>
 

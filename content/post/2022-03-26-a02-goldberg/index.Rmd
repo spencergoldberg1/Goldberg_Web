@@ -1,12 +1,12 @@
 ---
 title: "A03_Goldberg"
 author: "R package build"
-date: '2022-03-26'
-slug: a02-goldberg
+date: '2022-04-02'
+slug: a03-goldberg
 categories: []
 tags: []
 ---
 
 A03_Goldberg
-<script src="https://gist.github.com/spencergoldberg1/075bc26f1a781bcdf2e76a6f76d05f2b.js"></script>
+<script src="https://gist.github.com/spencergoldberg1/23b6004f997a6ce457f476c4fcd9f495.js"></script>
 

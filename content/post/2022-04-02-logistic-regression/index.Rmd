@@ -1,0 +1,12 @@
+---
+title: "Logistic Regression"
+author: "R package build"
+date: '2022-04-02'
+slug: logistic-regression
+categories: []
+tags: []
+---
+
+Logistic Regression
+
+

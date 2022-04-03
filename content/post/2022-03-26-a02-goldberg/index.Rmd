@@ -1,5 +1,5 @@
 ---
-title: "A02_Goldberg"
+title: "A03_Goldberg"
 author: "R package build"
 date: '2022-03-26'
 slug: a02-goldberg
@@ -7,6 +7,6 @@ categories: []
 tags: []
 ---
 
-A02_Goldberg
+A03_Goldberg
 <script src="https://gist.github.com/spencergoldberg1/075bc26f1a781bcdf2e76a6f76d05f2b.js"></script>
 

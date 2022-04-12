@@ -7,5 +7,5 @@ categories: []
 tags: []
 ---
 
-[certificate](https://pbs.twimg.com/profile_images/1455185376876826625/s1AjSxph_400x400.jpg)
+![certificate](https://github.com/spencergoldberg1/Goldberg_Web/blob/main/PrivacyCertificate.pdf)
 

@@ -7,5 +7,5 @@ categories: []
 tags: []
 ---
 
-![certificate](/Users/spencergoldberg/Desktop)
+[certificate](/Users/spencergoldberg/Desktop)
 

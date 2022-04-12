@@ -1,0 +1,11 @@
+---
+title: "Data Privacy"
+author: "R package build"
+date: '2022-04-12'
+slug: data-privacy
+categories: []
+tags: []
+---
+
+![certificate](/Users/spencergoldberg/Desktop)
+

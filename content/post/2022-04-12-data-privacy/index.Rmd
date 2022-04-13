@@ -7,5 +7,5 @@ categories: []
 tags: []
 ---
 
-![certificate](https://github.com/spencergoldberg1/Goldberg_Web/blob/main/PrivacyCertificate.pdf)
+![certificate](raw.githubusercontent.com/spencergoldberg1/Goldberg_Web/f76f6e6489e37c06dae66214ad10e8fc05318c21/PrivacyCertificate.pdf)
 

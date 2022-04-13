@@ -1,0 +1,10 @@
+---
+title: "A06- Predciting Airplane Flight Distances"
+author: "R package build"
+date: '2022-04-13'
+slug: a06-predciting-airplane-flight-distances
+categories: []
+tags: []
+---
+
+<script src="https://gist.github.com/spencergoldberg1/5d416dec512521ccd0a911524355ba19.js"></script>

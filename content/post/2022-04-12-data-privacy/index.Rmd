@@ -7,7 +7,7 @@ categories: []
 tags: []
 ---
 # Initial Impressions:
-##    The first thing that struck my attention as a viewer of the initial graph ## was the thought of "How could the data in different counties be correctly ## ## visualized when both averages for type of counties have a differnt y-axis scale? 
+##    The first thing that struck my attention as a viewer of the initial graph was the thought of "How could the data in different counties be correctly visualized when both averages for type of counties have a differnt y-axis scale? 
 ## When first looking at the representation the intended audience might be mislead by thinking that the averages over time have a very small difference, but is that really true?
 
 # Observations after representing the data more accurately

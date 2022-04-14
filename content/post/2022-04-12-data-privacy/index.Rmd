@@ -6,5 +6,16 @@ slug: data-privacy
 categories: []
 tags: []
 ---
+# Initial Impressions:
+##    The first thing that struck my attention as a viewer of the initial graph ## was the thought of "How could the data in different counties be correctly ## ## visualized when both averages for type of counties have a differnt y-axis scale? 
+## When first looking at the representation the intended audience might be mislead by thinking that the averages over time have a very small difference, but is that really true?
+
+# Observations after representing the data more accurately
+## After I created a tribble with the time series of dates, I created a ggplot timeseries line plot that is colored by the different types of counties. From the new plot we can easily see how much more of a true difference there is between mask counties and no mask counties. It is also clear that no mask counties in Kansas have a significantly lower average of cases per 100k people. The reason for this easy identification is because instead of looking at 2 different scales of the y-axis, we are only looking at 1.
+
+# Conclusions about Mask Wearing and COVID-19
+## The conclusions that can be made about by looking at the true and better representation of COVID-19 averages is that mask wearing counties produces a significantly lower averages of cases when compared to counties that have no mask requirements. 
+
+
 <script src="https://gist.github.com/spencergoldberg1/3d3cc334d75eb21a2046847b78afb150.js"></script>
 
